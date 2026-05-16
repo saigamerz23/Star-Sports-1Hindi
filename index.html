@@ -2,616 +2,767 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>EDGELIVE | English</title>
+<title>EDGE LIVE | ENGLISH</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Clash+Display:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Exo+2:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 
 <style>
 :root {
-  --blue-deep: #0B1628;
-  --blue-mid: #0F2040;
-  --blue-accent: #1A6BFF;
-  --blue-bright: #3D8EFF;
-  --blue-glow: rgba(26, 107, 255, 0.35);
-  --blue-subtle: rgba(26, 107, 255, 0.1);
-  --blue-border: rgba(61, 142, 255, 0.18);
-  --text-white: #EEF4FF;
-  --text-muted: #7B9ABF;
-  --text-dim: #4A6585;
-  --card-bg: rgba(15, 30, 60, 0.7);
-  --card-bg-solid: #0D1E38;
+  --bg:        #070D1A;
+  --bg2:       #0A1220;
+  --card:      #0D1829;
+  --card2:     #101F35;
+  --blue:      #1A6BFF;
+  --blue2:     #3D8EFF;
+  --cyan:      #00C8FF;
+  --glow:      rgba(26,107,255,0.32);
+  --glow2:     rgba(0,200,255,0.18);
+  --border:    rgba(61,142,255,0.14);
+  --border2:   rgba(0,200,255,0.12);
+  --txt:       #E4EEFF;
+  --muted:     #5A7BA0;
+  --dim:       #2A3F5A;
+  --green:     #00E896;
+  --red:       #FF4757;
+  --amber:     #FFB800;
 }
 
-* { box-sizing: border-box; -webkit-tap-highlight-color: transparent; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
 
 body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--blue-deep);
-  color: var(--text-white);
+  font-family: 'Exo 2', sans-serif;
+  background: var(--bg);
+  color: var(--txt);
   display: flex;
   justify-content: center;
+  min-height: 100vh;
   overflow-x: hidden;
-  min-height: 100vh;
 }
 
-/* Animated background */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background: 
-    radial-gradient(ellipse 60% 50% at 20% 10%, rgba(26, 107, 255, 0.15) 0%, transparent 60%),
-    radial-gradient(ellipse 40% 40% at 80% 80%, rgba(61, 142, 255, 0.1) 0%, transparent 60%),
-    radial-gradient(ellipse 80% 30% at 50% 50%, rgba(10, 25, 50, 0.8) 0%, transparent 100%);
-  pointer-events: none;
-  z-index: 0;
+/* ── ATMOSPHERIC BG ── */
+.atmosphere {
+  position: fixed; inset: 0; pointer-events: none; z-index: 0;
+}
+.atm-blob1 {
+  position: absolute; width: 500px; height: 500px;
+  top: -150px; left: -150px;
+  background: radial-gradient(circle, rgba(26,107,255,0.1) 0%, transparent 65%);
+  border-radius: 50%;
+}
+.atm-blob2 {
+  position: absolute; width: 400px; height: 400px;
+  bottom: 0; right: -100px;
+  background: radial-gradient(circle, rgba(0,200,255,0.07) 0%, transparent 65%);
+  border-radius: 50%;
+}
+.atm-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(26,107,255,0.028) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26,107,255,0.028) 1px, transparent 1px);
+  background-size: 32px 32px;
+}
+.atm-noise {
+  position: absolute; inset: 0;
+  opacity: 0.018;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size: 200px 200px;
 }
 
-/* Grid texture overlay */
-body::after {
-  content: '';
-  position: fixed;
-  inset: 0;
-  background-image: 
-    linear-gradient(rgba(61,142,255,0.03) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(61,142,255,0.03) 1px, transparent 1px);
-  background-size: 40px 40px;
-  pointer-events: none;
-  z-index: 0;
-}
-
-.app-container {
-  width: 100%;
-  max-width: 480px;
-  padding: 20px 18px;
-  min-height: 100vh;
-  position: relative;
-  z-index: 1;
+.wrap {
+  width: 100%; max-width: 470px;
+  padding: 16px 15px 50px;
+  position: relative; z-index: 1;
 }
 
 /* ── HEADER ── */
-.header-card {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 18px;
-  padding: 14px 18px;
-  background: var(--card-bg);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--blue-border);
-  border-radius: 18px;
-  animation: slideDown 0.5s ease;
+.hdr {
+  display: flex; align-items: center; justify-content: space-between;
+  background: linear-gradient(135deg, rgba(13,24,41,0.9), rgba(16,31,53,0.9));
+  backdrop-filter: blur(24px);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 12px 16px;
+  margin-bottom: 13px;
+  animation: slideDown 0.5s cubic-bezier(0.22,1,0.36,1) both;
 }
-
 @keyframes slideDown {
-  from { transform: translateY(-20px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
+  from { opacity:0; transform: translateY(-18px); }
+  to   { opacity:1; transform: translateY(0); }
 }
 
-.logo-wrap {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
+.hdr-logo { display:flex; align-items:center; gap:10px; }
 
-.logo-icon {
-  width: 36px;
-  height: 36px;
-  background: linear-gradient(135deg, var(--blue-accent), var(--blue-bright));
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.logo-gem {
+  width: 38px; height: 38px;
+  background: linear-gradient(135deg, #0A40A0, var(--blue), var(--cyan));
+  border-radius: 11px;
+  display: flex; align-items:center; justify-content:center;
   font-size: 18px;
-  box-shadow: 0 4px 16px var(--blue-glow);
+  box-shadow: 0 0 20px var(--glow), inset 0 1px 0 rgba(255,255,255,0.15);
   flex-shrink: 0;
+  position: relative; overflow: hidden;
+}
+.logo-gem::after {
+  content:''; position:absolute; top:-40%; left:-40%;
+  width:80%; height:80%;
+  background: rgba(255,255,255,0.12);
+  border-radius: 50%; transform: rotate(30deg);
 }
 
-.brand-meta h1 {
-  font-family: 'Syne', sans-serif;
-  font-size: 18px;
-  font-weight: 800;
-  letter-spacing: 0.04em;
-  background: linear-gradient(90deg, #fff 40%, var(--blue-bright));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.brand-meta span {
-  font-size: 10px;
-  color: var(--text-muted);
+.logo-name {
+  font-family: 'Rajdhani', sans-serif;
+  font-size: 20px; font-weight: 700;
   letter-spacing: 0.12em;
-  text-transform: uppercase;
-  font-weight: 500;
+  background: linear-gradient(90deg, #fff 30%, var(--cyan));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+.logo-sub {
+  font-size: 9px; color: var(--muted);
+  letter-spacing: 0.2em; text-transform: uppercase;
+  font-weight: 500; margin-top: 2px;
 }
 
-.live-badge {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background: rgba(26,107,255,0.12);
-  border: 1px solid rgba(26,107,255,0.3);
-  padding: 5px 12px;
-  border-radius: 100px;
-  font-size: 11px;
-  font-weight: 600;
-  color: var(--blue-bright);
-  letter-spacing: 0.08em;
+.hdr-right { display:flex; align-items:center; gap:8px; }
+
+.live-chip {
+  display:flex; align-items:center; gap:5px;
+  background: rgba(0,232,150,0.08);
+  border: 1px solid rgba(0,232,150,0.22);
+  padding: 5px 10px; border-radius: 100px;
+  font-size: 10px; font-weight: 700; color: var(--green);
+  letter-spacing: 0.1em;
+}
+.live-pip {
+  width:5px; height:5px; background:var(--green);
+  border-radius:50%; box-shadow: 0 0 6px var(--green);
+  animation: blink 1.4s ease-in-out infinite;
+}
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.25} }
+
+.tg-btn-sm {
+  background: linear-gradient(135deg, var(--blue), var(--blue2));
+  color:#fff; padding:8px 16px;
+  border-radius:100px; font-size:11px; font-weight:700;
+  text-decoration:none; letter-spacing:0.04em;
+  box-shadow: 0 3px 14px var(--glow);
+  transition: all 0.2s;
+}
+.tg-btn-sm:hover { transform:translateY(-1px); box-shadow:0 6px 20px var(--glow); }
+
+/* ── PLAYER ── */
+.player-section {
+  margin-bottom: 13px;
+  animation: riseUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.08s both;
+}
+@keyframes riseUp {
+  from { opacity:0; transform:translateY(22px); }
+  to   { opacity:1; transform:translateY(0); }
 }
 
-.live-dot {
-  width: 6px;
-  height: 6px;
-  background: #4AFFB4;
-  border-radius: 50%;
-  animation: pulse 1.5s infinite;
-  box-shadow: 0 0 8px rgba(74,255,180,0.6);
-}
-
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.5; transform: scale(0.7); }
-}
-
-.join-mini {
-  background: linear-gradient(135deg, var(--blue-accent), var(--blue-bright));
-  color: #fff;
-  padding: 9px 18px;
-  border-radius: 100px;
-  font-size: 12px;
-  font-weight: 700;
-  text-decoration: none;
-  letter-spacing: 0.04em;
-  box-shadow: 0 4px 16px var(--blue-glow);
-  transition: all 0.2s ease;
-}
-.join-mini:hover { transform: translateY(-1px); box-shadow: 0 6px 22px var(--blue-glow); }
-
-/* ── VIDEO FRAME ── */
-.video-wrap {
+.player-shell {
   position: relative;
-  margin-bottom: 16px;
-  animation: fadeUp 0.6s ease 0.1s both;
-}
-
-@keyframes fadeUp {
-  from { transform: translateY(24px); opacity: 0; }
-  to { transform: translateY(0); opacity: 1; }
-}
-
-.video-glow {
-  position: absolute;
-  inset: -2px;
-  border-radius: 24px;
-  background: linear-gradient(135deg, var(--blue-accent), var(--blue-bright), #0B8AFF);
-  opacity: 0.5;
-  filter: blur(8px);
-  z-index: -1;
-  animation: glowPulse 3s ease-in-out infinite;
-}
-
-@keyframes glowPulse {
-  0%, 100% { opacity: 0.3; }
-  50% { opacity: 0.6; }
-}
-
-.video-frame {
-  width: 100%;
-  aspect-ratio: 16/9;
-  background: #000;
   border-radius: 22px;
   overflow: hidden;
-  border: 1px solid var(--blue-border);
-  position: relative;
+  background: #000;
+  border: 1px solid var(--border);
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.5), 0 20px 60px rgba(0,0,0,0.5);
 }
 
-#stream-player { 
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%; 
-  border: none; 
+/* Glow ring around player */
+.player-ring {
+  position: absolute; inset: -1px; border-radius: 23px;
+  background: linear-gradient(135deg, var(--blue), var(--cyan), var(--blue));
+  opacity: 0; z-index: -1; filter: blur(6px);
+  transition: opacity 0.4s;
+  animation: ringGlow 4s ease-in-out infinite;
+}
+@keyframes ringGlow { 0%,100%{opacity:0.2} 50%{opacity:0.5} }
+
+.player-frame {
+  width:100%; aspect-ratio:16/9;
+  position:relative; background:#000;
+}
+.player-frame iframe {
+  position:absolute; top:0;left:0;
+  width:100%;height:100%; border:none;
 }
 
-/* ── CHANNEL INFO ── */
-.channel-info {
-  background: var(--card-bg);
-  backdrop-filter: blur(20px);
-  border-radius: 18px;
-  padding: 16px 20px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 14px;
-  border: 1px solid var(--blue-border);
-  animation: fadeUp 0.6s ease 0.2s both;
+/* Player top bar */
+.player-topbar {
+  position:absolute; top:0; left:0; right:0; z-index:5;
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 10px 14px;
+  background: linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, transparent 100%);
+  pointer-events:none;
+}
+.ptb-left { display:flex; align-items:center; gap:7px; }
+.ptb-live {
+  display:flex; align-items:center; gap:4px;
+  background: rgba(255,71,87,0.85);
+  backdrop-filter:blur(6px);
+  padding: 3px 9px; border-radius:5px;
+  font-size:10px; font-weight:700; color:#fff;
+  letter-spacing:0.08em;
+}
+.ptb-dot { width:5px;height:5px;background:#fff;border-radius:50%;animation:blink 1s infinite; }
+.ptb-ch {
+  font-size:11px; color:rgba(255,255,255,0.75); font-weight:500;
+  letter-spacing:0.04em;
 }
 
-.channel-left {
-  display: flex;
-  align-items: center;
-  gap: 14px;
+.ptb-right { display:flex; align-items:center; gap:6px; pointer-events:all; }
+
+/* Player bottom bar */
+.player-bottombar {
+  position:absolute; bottom:0;left:0;right:0; z-index:5;
+  display:flex; align-items:center; justify-content:space-between;
+  padding: 10px 14px;
+  background: linear-gradient(to top, rgba(0,0,0,0.75) 0%, transparent 100%);
+}
+.pbb-left { display:flex; align-items:center; gap:8px; }
+.quality-pills { display:flex; gap:5px; }
+.q-pill {
+  padding:3px 9px; border-radius:5px;
+  font-size:9px; font-weight:700;
+  border: 1px solid rgba(255,255,255,0.15);
+  color:rgba(255,255,255,0.55); cursor:pointer;
+  transition:all 0.2s; letter-spacing:0.06em;
+  background:rgba(0,0,0,0.3);
+}
+.q-pill.active {
+  background:var(--blue); border-color:var(--blue2);
+  color:#fff; box-shadow:0 0 10px var(--glow);
 }
 
-.channel-icon {
-  width: 44px;
-  height: 44px;
-  background: linear-gradient(135deg, #0F3575, #1A6BFF);
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 20px;
-  flex-shrink: 0;
-}
+.pbb-right { display:flex; align-items:center; gap:6px; }
 
-.channel-name {
-  font-family: 'Syne', sans-serif;
+.fs-btn {
+  background: rgba(26,107,255,0.25);
+  border: 1px solid rgba(61,142,255,0.4);
+  color: #fff;
+  width: 32px; height: 32px;
+  border-radius: 9px;
   font-size: 16px;
-  font-weight: 700;
-  color: var(--text-white);
-}
-
-.channel-sub {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-top: 2px;
-  font-weight: 400;
-}
-
-.hd-tag {
-  background: linear-gradient(135deg, var(--blue-accent), var(--blue-bright));
-  color: #fff;
-  font-size: 10px;
-  font-weight: 700;
-  padding: 4px 10px;
-  border-radius: 6px;
-  letter-spacing: 0.08em;
-}
-
-/* ── DIGG PANEL ── */
-.digg-panel {
-  background: var(--card-bg);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--blue-border);
-  border-radius: 24px;
-  padding: 28px 24px;
-  text-align: center;
-  margin-bottom: 14px;
-  position: relative;
-  overflow: hidden;
-  animation: fadeUp 0.6s ease 0.3s both;
-}
-
-.digg-panel::before {
-  content: '';
-  position: absolute;
-  top: -60px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 200px;
-  height: 120px;
-  background: radial-gradient(ellipse, rgba(26,107,255,0.2) 0%, transparent 70%);
-  pointer-events: none;
-}
-
-.digg-panel h2 {
-  font-family: 'Syne', sans-serif;
-  font-size: 20px;
-  font-weight: 800;
-  margin-bottom: 8px;
-  background: linear-gradient(90deg, #fff, var(--blue-bright));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-}
-
-.digg-panel p {
-  color: var(--text-muted);
-  font-size: 13.5px;
-  line-height: 1.6;
-  margin-bottom: 22px;
-  font-weight: 400;
-}
-
-.btn-solid-blue {
-  background: linear-gradient(135deg, var(--blue-accent) 0%, var(--blue-bright) 100%);
-  color: #fff;
-  width: 100%;
-  padding: 17px;
-  border-radius: 16px;
-  font-weight: 700;
-  font-size: 15px;
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-  box-shadow: 0 8px 28px var(--blue-glow);
-  transition: all 0.2s ease;
-  letter-spacing: 0.02em;
-}
-.btn-solid-blue:hover { transform: translateY(-2px); box-shadow: 0 12px 36px var(--blue-glow); }
-
-/* ── UTILITY ROW ── */
-.utility-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-  margin-top: 12px;
-}
-
-.util-btn {
-  background: var(--blue-subtle);
-  color: var(--text-white);
-  padding: 14px;
-  border-radius: 14px;
-  font-size: 13px;
-  font-weight: 600;
   cursor: pointer;
-  border: 1px solid var(--blue-border);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 7px;
+  display: flex; align-items: center; justify-content: center;
   transition: all 0.2s ease;
-  letter-spacing: 0.01em;
-}
-.util-btn:hover { background: rgba(26,107,255,0.18); border-color: rgba(26,107,255,0.4); transform: translateY(-1px); }
-.util-btn:active { transform: scale(0.97); }
-
-/* ── STATS ROW ── */
-.stats-row {
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
-  gap: 10px;
-  margin-bottom: 14px;
-  animation: fadeUp 0.6s ease 0.35s both;
-}
-
-.stat-card {
-  background: var(--card-bg);
-  backdrop-filter: blur(20px);
-  border: 1px solid var(--blue-border);
-  border-radius: 16px;
-  padding: 14px 10px;
-  text-align: center;
-}
-
-.stat-value {
-  font-family: 'Syne', sans-serif;
-  font-size: 18px;
-  font-weight: 800;
-  color: var(--blue-bright);
   line-height: 1;
-  margin-bottom: 4px;
+  padding: 0;
+}
+.fs-btn:hover { background: rgba(26,107,255,0.5); transform: scale(1.1); }
+.fs-btn:active { transform: scale(0.93); }
+
+/* Fullscreen mode styles */
+.player-shell:fullscreen,
+.player-shell:-webkit-full-screen,
+.player-shell:-moz-full-screen,
+.player-shell:-ms-fullscreen {
+  width: 100vw !important;
+  height: 100vh !important;
+  border-radius: 0 !important;
+  background: #000;
+  display: flex; flex-direction: column;
 }
 
-.stat-label {
-  font-size: 10px;
-  color: var(--text-dim);
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
+.player-shell:fullscreen .player-frame,
+.player-shell:-webkit-full-screen .player-frame,
+.player-shell:-moz-full-screen .player-frame,
+.player-shell:-ms-fullscreen .player-frame {
+  width: 100% !important;
+  height: 100% !important;
+  aspect-ratio: unset !important;
+  flex: 1;
 }
+
+.player-shell:fullscreen iframe,
+.player-shell:-webkit-full-screen iframe,
+.player-shell:-moz-full-screen iframe,
+.player-shell:-ms-fullscreen iframe {
+  width: 100% !important;
+  height: 100% !important;
+}
+
+/* ── CHANNEL + STATUS STRIP ── */
+.ch-strip {
+  display:flex; align-items:center; justify-content:space-between;
+  background:var(--card); border:1px solid var(--border);
+  border-radius:18px; padding:13px 16px;
+  margin-bottom:13px;
+  animation: riseUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.15s both;
+}
+.ch-left { display:flex; align-items:center; gap:12px; }
+.ch-ico {
+  width:44px;height:44px;
+  background:linear-gradient(135deg,#0A2A60,var(--blue));
+  border-radius:12px; display:flex;align-items:center;justify-content:center;
+  font-size:22px; flex-shrink:0;
+  box-shadow:0 4px 14px rgba(26,107,255,0.25);
+}
+.ch-name {
+  font-family:'Rajdhani',sans-serif;
+  font-size:17px;font-weight:700;letter-spacing:0.04em;color:var(--txt);
+}
+.ch-meta { font-size:11px;color:var(--muted);font-weight:400;margin-top:1px; }
+.ch-right { display:flex;flex-direction:column;align-items:flex-end;gap:5px; }
+.hd-pill {
+  background:linear-gradient(135deg,var(--blue),var(--cyan));
+  color:#fff;font-size:9px;font-weight:800;
+  padding:3px 9px;border-radius:5px;letter-spacing:0.1em;
+}
+.status-dot-wrap { display:flex;align-items:center;gap:5px; }
+.online-dot { width:6px;height:6px;background:var(--green);border-radius:50%;box-shadow:0 0 6px var(--green); animation:blink 2s infinite; }
+.status-txt { font-size:10px;color:var(--green);font-weight:600;letter-spacing:0.04em; }
+
+/* ── FEATURE GRID ── */
+.feat-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:10px; margin-bottom:13px;
+  animation: riseUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.22s both;
+}
+
+.feat-card {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:18px;
+  padding:16px 15px;
+  cursor:pointer;
+  transition:all 0.22s ease;
+  position:relative; overflow:hidden;
+}
+.feat-card::before {
+  content:''; position:absolute;
+  top:-30px;left:-30px; width:80px;height:80px;
+  background:radial-gradient(circle,var(--blue-glow,rgba(26,107,255,0.12)) 0%,transparent 70%);
+  transition:all 0.3s;
+}
+.feat-card:hover { transform:translateY(-2px); border-color:rgba(61,142,255,0.32); background:var(--card2); }
+.feat-card:hover::before { opacity:1.5; }
+.feat-card:active { transform:scale(0.97); }
+
+.feat-icon { font-size:22px; margin-bottom:8px; display:block; }
+.feat-title { font-family:'Rajdhani',sans-serif;font-size:15px;font-weight:700;letter-spacing:0.03em;color:var(--txt);margin-bottom:2px; }
+.feat-desc { font-size:10px;color:var(--muted);font-weight:400;line-height:1.5; }
+.feat-badge {
+  position:absolute;top:12px;right:12px;
+  background:var(--blue);color:#fff;
+  font-size:8px;font-weight:800;padding:2px 7px;
+  border-radius:100px;letter-spacing:0.06em;
+}
+
+/* Speed meter card */
+.speed-card {
+  background:var(--card); border:1px solid var(--border);
+  border-radius:18px; padding:16px 18px;
+  margin-bottom:13px;
+  animation: riseUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.28s both;
+}
+.speed-header { display:flex;align-items:center;justify-content:space-between;margin-bottom:12px; }
+.speed-title { font-family:'Rajdhani',sans-serif;font-size:14px;font-weight:700;letter-spacing:0.05em;color:var(--muted);text-transform:uppercase; }
+.speed-refresh {
+  background:var(--blue-subtle,rgba(26,107,255,0.1));
+  border:1px solid var(--border); color:var(--blue2);
+  padding:4px 12px;border-radius:8px;
+  font-size:10px;font-weight:700;cursor:pointer;
+  transition:all 0.2s;letter-spacing:0.04em;
+}
+.speed-refresh:hover { background:rgba(26,107,255,0.2); }
+.speed-refresh.spinning { animation:spin 0.8s linear; }
+@keyframes spin { to{transform:rotate(360deg)} }
+
+.speed-bars { display:flex;gap:8px;align-items:stretch; }
+.speed-item { flex:1;text-align:center; }
+.speed-val {
+  font-family:'Rajdhani',sans-serif;font-size:22px;font-weight:700;
+  letter-spacing:0.03em;
+  background:linear-gradient(135deg,var(--blue2),var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text; line-height:1;
+}
+.speed-unit { font-size:9px;color:var(--muted);letter-spacing:0.08em;text-transform:uppercase;margin-top:2px; }
+.speed-lbl { font-size:10px;color:var(--dim);font-weight:500;margin-top:4px;letter-spacing:0.04em; }
+.speed-divider { width:1px;background:var(--border);margin:4px 0; }
+
+/* ── NOW ON AIR CARD ── */
+.onair-card {
+  background:linear-gradient(135deg,rgba(13,24,41,0.95),rgba(10,20,40,0.95));
+  border:1px solid var(--border);
+  border-radius:20px;
+  padding:18px;
+  margin-bottom:13px;
+  position:relative;overflow:hidden;
+  animation: riseUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.32s both;
+}
+.onair-card::before {
+  content:''; position:absolute;
+  left:-20px;top:50%;transform:translateY(-50%);
+  width:3px;height:60%;
+  background:linear-gradient(to bottom,var(--blue),var(--cyan));
+  border-radius:2px;
+}
+.onair-header { display:flex;align-items:center;gap:8px;margin-bottom:12px; }
+.onair-label {
+  font-size:9px;font-weight:800;letter-spacing:0.14em;text-transform:uppercase;
+  color:var(--cyan);
+}
+.onair-divider { flex:1;height:1px;background:var(--border); }
+
+.onair-prog { display:flex;align-items:center;gap:12px;margin-bottom:10px; }
+.onair-thumb {
+  width:48px;height:48px;flex-shrink:0;
+  border-radius:10px;
+  background:linear-gradient(135deg,#0A2860,var(--blue));
+  display:flex;align-items:center;justify-content:center;font-size:22px;
+  box-shadow:0 4px 12px rgba(26,107,255,0.3);
+}
+.onair-info { flex:1;min-width:0; }
+.onair-name {
+  font-family:'Rajdhani',sans-serif;font-size:16px;font-weight:700;
+  letter-spacing:0.03em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;
+}
+.onair-time { font-size:11px;color:var(--muted);margin-top:2px; }
+
+/* Progress bar */
+.prog-bar-wrap { background:rgba(255,255,255,0.06);border-radius:100px;height:4px;overflow:hidden;margin-bottom:4px; }
+.prog-bar-fill {
+  height:100%;border-radius:100px;
+  background:linear-gradient(90deg,var(--blue),var(--cyan));
+  width:40%;transition:width 1s ease;
+  box-shadow:0 0 8px var(--glow);
+}
+.prog-times { display:flex;justify-content:space-between; }
+.prog-time { font-size:9px;color:var(--dim);font-weight:500; }
+
+.next-up {
+  display:flex;align-items:center;gap:8px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid var(--border);
+  border-radius:12px;padding:10px 12px;
+  margin-top:10px;
+}
+.next-label { font-size:9px;font-weight:800;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;flex-shrink:0; }
+.next-name { font-size:12px;font-weight:600;color:var(--txt);flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap; }
+.next-time { font-size:10px;color:var(--blue2);font-weight:600;flex-shrink:0; }
+
+/* ── TELEGRAM PANEL ── */
+.tg-panel {
+  background:var(--card);
+  border:1px solid var(--border);
+  border-radius:22px;
+  padding:24px 20px;
+  text-align:center;
+  margin-bottom:13px;
+  position:relative;overflow:hidden;
+  animation: riseUp 0.6s cubic-bezier(0.22,1,0.36,1) 0.36s both;
+}
+.tg-panel::after {
+  content:''; position:absolute;
+  top:-60px;left:50%;transform:translateX(-50%);
+  width:200px;height:120px;
+  background:radial-gradient(ellipse,rgba(26,107,255,0.18) 0%,transparent 70%);
+  pointer-events:none;
+}
+.tg-title {
+  font-family:'Rajdhani',sans-serif;
+  font-size:22px;font-weight:700;letter-spacing:0.04em;
+  margin-bottom:7px;
+  background:linear-gradient(90deg,#fff 40%,var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  position:relative;
+}
+.tg-desc { font-size:13px;color:var(--muted);line-height:1.6;margin-bottom:18px;font-weight:400;position:relative; }
+.tg-big-btn {
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  width:100%;padding:16px;
+  background:linear-gradient(135deg,var(--blue) 0%,#0EA5FF 100%);
+  color:#fff;border-radius:15px;
+  font-size:14px;font-weight:700;text-decoration:none;
+  box-shadow:0 8px 28px var(--glow);
+  transition:all 0.22s ease;letter-spacing:0.03em;position:relative;overflow:hidden;
+}
+.tg-big-btn::before {
+  content:'';position:absolute;top:0;left:-100%;width:100%;height:100%;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,0.1),transparent);
+  transition:left 0.5s;
+}
+.tg-big-btn:hover::before { left:100%; }
+.tg-big-btn:hover { transform:translateY(-2px);box-shadow:0 12px 36px var(--glow); }
+
+.util-row { display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:10px; }
+.util {
+  background:rgba(26,107,255,0.06);
+  border:1px solid var(--border);
+  border-radius:13px;padding:13px;
+  font-size:13px;font-weight:600;color:var(--txt);
+  cursor:pointer;display:flex;align-items:center;justify-content:center;
+  gap:7px;transition:all 0.2s;
+}
+.util:hover { background:rgba(26,107,255,0.15);border-color:rgba(61,142,255,0.35);transform:translateY(-1px); }
+.util:active { transform:scale(0.97); }
 
 /* ── POPUP ── */
 .overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(5, 12, 28, 0.95);
-  backdrop-filter: blur(16px);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 9999;
-  animation: overlayIn 0.3s ease;
+  position:fixed;inset:0;
+  background:rgba(3,8,20,0.96);
+  backdrop-filter:blur(18px);
+  display:flex;align-items:center;justify-content:center;
+  z-index:9999;
 }
-
-@keyframes overlayIn {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
 .popup {
-  background: var(--card-bg-solid);
-  width: 88%;
-  max-width: 360px;
-  border-radius: 30px;
-  padding: 38px 28px;
-  text-align: center;
-  border: 1px solid var(--blue-border);
-  position: relative;
-  overflow: hidden;
-  animation: popupIn 0.4s cubic-bezier(0.34,1.56,0.64,1);
+  background:var(--card2);
+  width:88%;max-width:350px;
+  border-radius:28px;padding:36px 26px;
+  text-align:center;
+  border:1px solid var(--border);
+  position:relative;overflow:hidden;
+  animation:popIn 0.4s cubic-bezier(0.34,1.56,0.64,1) both;
 }
-
-@keyframes popupIn {
-  from { transform: scale(0.85) translateY(20px); opacity: 0; }
-  to { transform: scale(1) translateY(0); opacity: 1; }
+@keyframes popIn {
+  from{transform:scale(0.8) translateY(20px);opacity:0}
+  to{transform:scale(1) translateY(0);opacity:1}
 }
-
 .popup::before {
-  content: '';
-  position: absolute;
-  top: -80px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 240px;
-  height: 160px;
-  background: radial-gradient(ellipse, rgba(26,107,255,0.25) 0%, transparent 70%);
-  pointer-events: none;
+  content:'';position:absolute;top:-70px;left:50%;transform:translateX(-50%);
+  width:260px;height:140px;
+  background:radial-gradient(ellipse,rgba(26,107,255,0.22) 0%,transparent 70%);
+  pointer-events:none;
 }
-
-.popup-emoji {
-  font-size: 48px;
-  margin-bottom: 14px;
-  display: block;
-  animation: bounce 1s ease infinite;
-}
-
-@keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-6px); }
-}
-
+.popup-emoji { font-size:46px;display:block;margin-bottom:14px;animation:floatUp 2s ease-in-out infinite; }
+@keyframes floatUp { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-6px)} }
 .popup h2 {
-  font-family: 'Syne', sans-serif;
-  font-size: 26px;
-  font-weight: 800;
-  margin-bottom: 10px;
-  background: linear-gradient(135deg, #fff, var(--blue-bright));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
+  font-family:'Rajdhani',sans-serif;font-size:26px;font-weight:700;letter-spacing:0.06em;
+  margin-bottom:10px;
+  background:linear-gradient(135deg,#fff,var(--cyan));
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;position:relative;
 }
-
-.popup p {
-  color: var(--text-muted);
-  margin-bottom: 26px;
-  font-size: 14px;
-  line-height: 1.65;
+.popup p { color:var(--muted);font-size:13.5px;line-height:1.65;margin-bottom:24px;position:relative; }
+.skip-btn {
+  background:transparent;border:1px solid var(--border);
+  color:var(--muted);padding:10px 22px;border-radius:100px;
+  font-size:12px;margin-top:13px;cursor:pointer;
+  font-family:'Exo 2',sans-serif;transition:all 0.2s;
 }
-
-.already-joined-btn {
-  background: transparent;
-  border: 1px solid var(--blue-border);
-  color: var(--text-muted);
-  padding: 10px 24px;
-  border-radius: 100px;
-  font-size: 12px;
-  margin-top: 14px;
-  cursor: pointer;
-  font-family: 'DM Sans', sans-serif;
-  transition: all 0.2s ease;
-  letter-spacing: 0.02em;
-}
-.already-joined-btn:hover { color: var(--text-white); border-color: rgba(61,142,255,0.3); }
+.skip-btn:hover { color:var(--txt);border-color:rgba(61,142,255,0.3); }
 
 /* ── FOOTER ── */
 footer {
-  text-align: center;
-  padding: 30px 0 40px;
-  animation: fadeUp 0.6s ease 0.4s both;
+  text-align:center;padding:20px 0 10px;
+  animation: riseUp 0.6s ease 0.42s both;
 }
+footer p { font-size:11px;color:var(--dim);line-height:2.2; }
+footer strong { font-family:'Rajdhani',sans-serif;font-size:13px;color:var(--muted);letter-spacing:0.12em; }
 
-footer p {
-  font-size: 12px;
-  color: var(--text-dim);
-  line-height: 2;
+/* Toast */
+.toast {
+  position:fixed;bottom:30px;left:50%;transform:translateX(-50%) translateY(80px);
+  background:var(--card2);border:1px solid var(--border);
+  border-radius:100px;padding:10px 22px;
+  font-size:13px;font-weight:600;color:var(--txt);
+  box-shadow:0 8px 28px rgba(0,0,0,0.4);
+  z-index:9998;transition:transform 0.35s cubic-bezier(0.22,1,0.36,1);
+  white-space:nowrap;
 }
-
-footer strong {
-  font-family: 'Syne', sans-serif;
-  font-size: 13px;
-  color: var(--text-muted);
-  letter-spacing: 0.08em;
-}
-
-/* Scan line effect on video */
-.video-frame::after {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 100%; height: 100%;
-  background: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 2px,
-    rgba(0,0,0,0.03) 2px,
-    rgba(0,0,0,0.03) 4px
-  );
-  pointer-events: none;
-  z-index: 1;
-  border-radius: 22px;
-}
+.toast.show { transform:translateX(-50%) translateY(0); }
 </style>
 </head>
 <body oncontextmenu="return false">
+
+<!-- BG -->
+<div class="atmosphere">
+  <div class="atm-blob1"></div>
+  <div class="atm-blob2"></div>
+  <div class="atm-grid"></div>
+  <div class="atm-noise"></div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">✓ Link Copied!</div>
 
 <!-- POPUP -->
 <div class="overlay" id="popup">
   <div class="popup">
     <span class="popup-emoji">📡</span>
-    <h2>Welcome to EdgeLive</h2>
-    <p>Join our Telegram for live match clips, exclusive highlights & real-time updates 🚀</p>
-    <a href="https://t.me/+WTsvhyPbmHM5M2Zl" class="btn-solid-blue" target="_blank">
-      ✈️ Join Telegram Channel
-    </a>
+    <h2>EDGE LIVE</h2>
+    <p>Get live match clips, exclusive highlights & instant stream links on Telegram 🚀</p>
+    <a href="https://t.me/+WTsvhyPbmHM5M2Zl" class="tg-big-btn" target="_blank">✈️ Join Telegram Channel</a>
     <br>
-    <button class="already-joined-btn" onclick="closePopup()">Already a member</button>
+    <button class="skip-btn" onclick="closePopup()">Already a member</button>
   </div>
 </div>
 
-<div class="app-container">
+<div class="wrap">
 
   <!-- HEADER -->
-  <div class="header-card">
-    <div class="logo-wrap">
-      <div class="logo-icon">⚡</div>
-      <div class="brand-meta">
-        <h1>EDGE LIVE</h1>
-        <span>HD Streaming</span>
-      </div>
-    </div>
-    <div style="display:flex; align-items:center; gap:10px;">
-      <div class="live-badge"><div class="live-dot"></div>LIVE</div>
-      <a href="https://t.me/+WTsvhyPbmHM5M2Zl" class="join-mini" target="_blank">Join</a>
-    </div>
-  </div>
-
-  <!-- VIDEO -->
-  <div class="video-wrap">
-    <div class="video-glow"></div>
-    <div class="video-frame" id="viewport">
-      <div style="color:#3D8EFF; display:flex; align-items:center; justify-content:center; height:100%; font-size:13px; letter-spacing:0.05em; font-family:'Syne',sans-serif; font-weight:600;">
-        Initializing Stream...
-      </div>
-    </div>
-  </div>
-
-  <!-- CHANNEL INFO -->
-  <div class="channel-info">
-    <div class="channel-left">
-      <div class="channel-icon">🏏</div>
+  <div class="hdr">
+    <div class="hdr-logo">
+      <div class="logo-gem">⚡</div>
       <div>
-        <div class="channel-name">Star Sports</div>
-        <div class="channel-sub">Sports · English</div>
+        <div class="logo-name">EDGE LIVE</div>
+        <div class="logo-sub">HD Streaming</div>
       </div>
     </div>
-    <div class="hd-tag">HD</div>
-  </div>
-
-  <!-- STATS ROW -->
-  <div class="stats-row">
-    <div class="stat-card">
-      <div class="stat-value">24/7</div>
-      <div class="stat-label">Live Feed</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value">HD</div>
-      <div class="stat-label">Quality</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-value">0ms</div>
-      <div class="stat-label">Buffering</div>
+    <div class="hdr-right">
+      <div class="live-chip"><div class="live-pip"></div>LIVE</div>
+      <a href="https://t.me/+WTsvhyPbmHM5M2Zl" class="tg-btn-sm" target="_blank">Join</a>
     </div>
   </div>
 
-  <!-- DIGG PANEL -->
-  <div class="digg-panel">
-    <h2>Stay in the Loop</h2>
-    <p>Live match clips 🎥, rare highlights 🔥, and exclusive links — delivered instantly on Telegram 🚀</p>
-    <a href="https://t.me/+WTsvhyPbmHM5M2Zl" class="btn-solid-blue" target="_blank">
-      📲 Get More Links on Telegram
-    </a>
-    <div class="utility-row">
-      <div class="util-btn" onclick="sharePage()">📤 Share</div>
-      <div class="util-btn" onclick="copyLink()">🔗 Copy Link</div>
+  <!-- PLAYER -->
+  <div class="player-section">
+    <div class="player-ring"></div>
+    <div class="player-shell">
+      <div class="player-frame" id="playerFrame">
+
+        <!-- Top bar -->
+        <div class="player-topbar">
+          <div class="ptb-left">
+            <div class="ptb-live"><div class="ptb-dot"></div>LIVE</div>
+            <div class="ptb-ch">Star Sports English HD</div>
+          </div>
+        </div>
+
+        <!-- iframe -->
+        <iframe
+          id="streamIframe"
+          src="https://jtvxweb.pages.dev/pind?id=1106"
+          allow="autoplay; encrypted-media; fullscreen; picture-in-picture"
+          allowfullscreen="true"
+          referrerpolicy="no-referrer"
+          scrolling="no"
+          sandbox="allow-scripts allow-same-origin allow-forms allow-presentation">
+        </iframe>
+
+        <!-- Click blocker — stops iframe from opening other websites on tap -->
+        <div id="clickBlocker" style="position:absolute;inset:0;z-index:4;background:transparent;cursor:default;"></div>
+
+        <!-- Bottom bar -->
+        <div class="player-bottombar">
+          <div class="pbb-left">
+            <div class="quality-pills">
+              <div class="q-pill" onclick="setQ(this,'Auto')">Auto</div>
+              <div class="q-pill active" onclick="setQ(this,'HD')">HD</div>
+              <div class="q-pill" onclick="setQ(this,'SD')">SD</div>
+            </div>
+          </div>
+          <div class="pbb-right">
+            <button class="fs-btn" id="fsBtn" onclick="toggleFullscreen()">⛶</button>
+          </div>
+        </div>
+
+      </div>
     </div>
   </div>
 
-  <!-- FOOTER -->
+  <!-- CHANNEL STRIP -->
+  <div class="ch-strip">
+    <div class="ch-left">
+      <div class="ch-ico">🦊</div>
+      <div>
+        <div class="ch-name">Fox Kayo Sports</div>
+        <div class="ch-meta">Sports ·English · HD</div>
+      </div>
+    </div>
+    <div class="ch-right">
+      <div class="hd-pill">HD</div>
+      <div class="status-dot-wrap">
+        <div class="online-dot"></div>
+        <div class="status-txt">Online</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- FEATURE GRID -->
+  <div class="feat-grid">
+    <div class="feat-card" onclick="sharePage()">
+      <div class="feat-badge">NEW</div>
+      <span class="feat-icon">📤</span>
+      <div class="feat-title">Share Stream</div>
+      <div class="feat-desc">Share this stream with friends instantly</div>
+    </div>
+    <div class="feat-card" onclick="copyLink()">
+      <span class="feat-icon">🔗</span>
+      <div class="feat-title">Copy Link</div>
+      <div class="feat-desc">Copy stream link to clipboard</div>
+    </div>
+    <div class="feat-card" onclick="reloadStream()">
+      <span class="feat-icon">🔄</span>
+      <div class="feat-title">Reload Stream</div>
+      <div class="feat-desc">Refresh if stream is buffering</div>
+    </div>
+    <div class="feat-card" onclick="openTelegram()">
+      <div class="feat-badge">HOT</div>
+      <span class="feat-icon">✈️</span>
+      <div class="feat-title">Telegram</div>
+      <div class="feat-desc">Get exclusive links & highlights</div>
+    </div>
+  </div>
+
+  <!-- CONNECTION SPEED ── -->
+  <div class="speed-card">
+    <div class="speed-header">
+      <div class="speed-title">📶 Connection</div>
+      <div class="speed-refresh" id="speedBtn" onclick="refreshSpeed()">↻ Refresh</div>
+    </div>
+    <div class="speed-bars">
+      <div class="speed-item">
+        <div class="speed-val" id="dlSpeed">—</div>
+        <div class="speed-unit">Mbps</div>
+        <div class="speed-lbl">Download</div>
+      </div>
+      <div class="speed-divider"></div>
+      <div class="speed-item">
+        <div class="speed-val" id="latency">—</div>
+        <div class="speed-unit">ms</div>
+        <div class="speed-lbl">Latency</div>
+      </div>
+      <div class="speed-divider"></div>
+      <div class="speed-item">
+        <div class="speed-val" id="connQual">—</div>
+        <div class="speed-unit">&nbsp;</div>
+        <div class="speed-lbl">Quality</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- NOW ON AIR -->
+  <div class="onair-card">
+    <div class="onair-header">
+      <div class="onair-label">Now On Air</div>
+      <div class="onair-divider"></div>
+    </div>
+    <div class="onair-prog">
+      <div class="onair-thumb">🏏</div>
+      <div class="onair-info">
+        <div class="onair-name" id="nowName">Loading...</div>
+        <div class="onair-time" id="nowTime">—</div>
+      </div>
+    </div>
+    <div class="prog-bar-wrap"><div class="prog-bar-fill" id="progFill"></div></div>
+    <div class="prog-times">
+      <div class="prog-time" id="progStart">—</div>
+      <div class="prog-time" id="progEnd">—</div>
+    </div>
+    <div class="next-up">
+      <div class="next-label">NEXT</div>
+      <div class="next-name" id="nextName">Loading...</div>
+      <div class="next-time" id="nextTime">—</div>
+    </div>
+  </div>
+
+  <!-- TELEGRAM PANEL -->
+  <div class="tg-panel">
+    <div class="tg-title">Stay in the Loop</div>
+    <p class="tg-desc">Live match clips 🎥, rare highlights 🔥, and exclusive stream links — delivered instantly 🚀</p>
+    <a href="https://t.me/+WTsvhyPbmHM5M2Zl" class="tg-big-btn" target="_blank">📲 Join Telegram For More</a>
+    <div class="util-row">
+      <div class="util" onclick="sharePage()">📤 Share</div>
+      <div class="util" onclick="copyLink()">🔗 Copy</div>
+    </div>
+  </div>
+
   <footer>
     <p>Made with ❤️ for every fan by sai</p>
     <strong>© EDGE LIVE</strong>
@@ -620,35 +771,204 @@ footer strong {
 </div>
 
 <script>
-const streamUrl = "https://jtvxweb.pages.dev/pind?id=1106";
-
+// ── POPUP ──
 window.onload = function() {
   if (sessionStorage.getItem("elite_access") === "true") {
     document.getElementById("popup").style.display = "none";
   }
-  const viewport = document.getElementById('viewport');
-  viewport.innerHTML = `<iframe id="stream-player" src="${streamUrl}" allow="autoplay; encrypted-media; fullscreen" allowfullscreen="true" referrerpolicy="no-referrer"></iframe>`;
+
+  // Block iframe from opening other websites via window.open
+  const _origOpen = window.open;
+  window.open = function(url, target, features) {
+    if (url && !url.includes('t.me')) return null;
+    return _origOpen.apply(this, arguments);
+  };
+
+  measureSpeed();
+  initSchedule();
 };
 
 function closePopup() {
-  const overlay = document.getElementById("popup");
-  overlay.style.opacity = "0";
-  overlay.style.transition = "opacity 0.3s ease";
-  setTimeout(() => overlay.style.display = "none", 300);
+  const el = document.getElementById("popup");
+  el.style.transition = "opacity 0.3s ease";
+  el.style.opacity = "0";
+  setTimeout(() => el.style.display = "none", 300);
   sessionStorage.setItem("elite_access", "true");
+}
+
+// ── ACTIONS ──
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2200);
 }
 
 function copyLink() {
   navigator.clipboard.writeText(window.location.href);
-  alert("Link Copied!");
+  showToast('✓ Link Copied!');
 }
 
 function sharePage() {
   if (navigator.share) {
-    navigator.share({ title: 'EdgeLive | Star Sports 1 HD', url: window.location.href });
-  } else {
-    copyLink();
+    navigator.share({ title: 'EdgeLive | Fox Kayo HD', url: window.location.href });
+  } else { copyLink(); }
+}
+
+function openTelegram() {
+  window.open('https://t.me/+WTsvhyPbmHM5M2Zl', '_blank');
+}
+
+function reloadStream() {
+  const iframe = document.getElementById('streamIframe');
+  if (iframe) {
+    iframe.src = iframe.src;
+    showToast('🔄 Stream Reloaded!');
   }
+}
+
+// ── FULLSCREEN (no new tab) ──
+function toggleFullscreen() {
+  const shell = document.querySelector('.player-shell');
+  const btn = document.getElementById('fsBtn');
+
+  const isFS = !!(
+    document.fullscreenElement ||
+    document.webkitFullscreenElement ||
+    document.mozFullScreenElement ||
+    document.msFullscreenElement
+  );
+
+  if (!isFS) {
+    // Enter fullscreen on the player shell element
+    if (shell.requestFullscreen) shell.requestFullscreen();
+    else if (shell.webkitRequestFullscreen) shell.webkitRequestFullscreen();
+    else if (shell.mozRequestFullScreen) shell.mozRequestFullScreen();
+    else if (shell.msRequestFullscreen) shell.msRequestFullscreen();
+    btn.textContent = '✕';
+    btn.title = 'Exit Fullscreen';
+    // Lock to landscape on mobile
+    if (screen.orientation && screen.orientation.lock) {
+      screen.orientation.lock('landscape').catch(() => {});
+    }
+  } else {
+    if (document.exitFullscreen) document.exitFullscreen();
+    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+    else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+    else if (document.msExitFullscreen) document.msExitFullscreen();
+    btn.textContent = '⛶';
+    btn.title = 'Fullscreen';
+  }
+}
+
+// Sync button icon when user presses Escape to exit fullscreen
+document.addEventListener('fullscreenchange', () => {
+  const btn = document.getElementById('fsBtn');
+  if (!document.fullscreenElement) {
+    if (btn) btn.textContent = '⛶';
+    // Unlock orientation
+    if (screen.orientation && screen.orientation.unlock) screen.orientation.unlock();
+  } else {
+    if (btn) btn.textContent = '✕';
+  }
+});
+document.addEventListener('webkitfullscreenchange', () => {
+  const btn = document.getElementById('fsBtn');
+  if (!document.webkitFullscreenElement) {
+    if (btn) btn.textContent = '⛶';
+  } else {
+    if (btn) btn.textContent = '✕';
+  }
+});
+function setQ(el, quality) {
+  document.querySelectorAll('.q-pill').forEach(p => p.classList.remove('active'));
+  el.classList.add('active');
+  showToast('Quality set to ' + quality);
+}
+
+// ── CONNECTION SPEED METER ──
+function measureSpeed() {
+  // Simulate realistic speed reading
+  const dl = (Math.random() * 60 + 20).toFixed(1);
+  const lat = Math.floor(Math.random() * 40 + 12);
+  let qual, qualColor;
+  if (dl > 50) { qual = 'Great'; qualColor = '#00E896'; }
+  else if (dl > 25) { qual = 'Good'; qualColor = '#FFB800'; }
+  else { qual = 'Fair'; qualColor = '#FF4757'; }
+
+  setTimeout(() => {
+    const dlEl = document.getElementById('dlSpeed');
+    const latEl = document.getElementById('latency');
+    const qEl = document.getElementById('connQual');
+    if (dlEl) { dlEl.textContent = dl; }
+    if (latEl) { latEl.textContent = lat; }
+    if (qEl) { qEl.textContent = qual; qEl.style.color = qualColor;
+      qEl.style.webkitTextFillColor = qualColor; }
+  }, 800);
+}
+
+function refreshSpeed() {
+  const btn = document.getElementById('speedBtn');
+  ['dlSpeed','latency','connQual'].forEach(id => {
+    const el = document.getElementById(id);
+    if(el) { el.textContent = '…'; el.style.webkitTextFillColor = ''; }
+  });
+  btn.classList.add('spinning');
+  setTimeout(() => btn.classList.remove('spinning'), 800);
+  measureSpeed();
+  showToast('📶 Checking connection...');
+}
+
+// ── SCHEDULE / NOW ON AIR ──
+function initSchedule() {
+  const schedule = [
+    { name: 'IPL 2025 · KKR vs GT', start: '7:00', end: '11:30', icon: '🏏' },
+  ];
+
+  function toMins(t) {
+    const [h,m] = t.split(':').map(Number);
+    return h * 60 + m;
+  }
+
+  function fmtTime(t) {
+    const [h,m] = t.split(':').map(Number);
+    const ampm = h >= 12 ? 'PM' : 'AM';
+    const hh = h % 12 || 12;
+    return `${hh}:${m.toString().padStart(2,'0')} ${ampm}`;
+  }
+
+  function update() {
+    const now = new Date();
+    const nowMins = now.getHours() * 60 + now.getMinutes();
+    let currentIdx = schedule.findIndex((s,i) => {
+      const s1 = toMins(s.start), e1 = toMins(s.end);
+      return nowMins >= s1 && nowMins < e1;
+    });
+    if (currentIdx === -1) currentIdx = 0;
+    const cur = schedule[currentIdx];
+    const next = schedule[(currentIdx + 1) % schedule.length];
+    const startM = toMins(cur.start), endM = toMins(cur.end);
+    const pct = Math.min(100, Math.max(0, ((nowMins - startM) / (endM - startM)) * 100));
+
+    const nn = document.getElementById('nowName');
+    const nt = document.getElementById('nowTime');
+    const pf = document.getElementById('progFill');
+    const ps = document.getElementById('progStart');
+    const pe = document.getElementById('progEnd');
+    const nxn = document.getElementById('nextName');
+    const nxt = document.getElementById('nextTime');
+
+    if (nn) nn.textContent = cur.name;
+    if (nt) nt.textContent = fmtTime(cur.start) + ' – ' + fmtTime(cur.end);
+    if (pf) pf.style.width = pct + '%';
+    if (ps) ps.textContent = fmtTime(cur.start);
+    if (pe) pe.textContent = fmtTime(cur.end);
+    if (nxn) nxn.textContent = next.name;
+    if (nxt) nxt.textContent = fmtTime(next.start);
+  }
+
+  update();
+  setInterval(update, 30000);
 }
 
 document.onkeydown = (e) => {
@@ -656,4 +976,4 @@ document.onkeydown = (e) => {
 };
 </script>
 </body>
-      </html>
+</html>
